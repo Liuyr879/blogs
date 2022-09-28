@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %}
+{% block content%}
+
+<div style="border: 1px solid; margin-top: 20px; width: 100px; padding: 5px; text-align: center; border-radius: 10px">
+    <a href="{% url 'post_new' %}" style="text-decoration: none"> 
+        New Post
+    </a>
+</div>
+<div></div>
+<div></div>
+<div></div>
+
+    {% for post in posts  %}
+        {%if post.enabled == False%}
+    <div style="display: inline-block">
+        <div style="border: 1px solid; margin-top: 20px; width: 200px; padding: 5px">
+            <div style="text-align: center; font-size: 25px;">
+                <a href="{% url 'post_detail' post_pk=post.pk %}">{{post.title}}</a>
+            </div>
+            <div style="font-size: 12px; text-align: center">
+                <p>{{post.created_date.date}}</p>
+            </div>
+
+        </div>
+
+    </div>
+        {%endif%}
+    {% endfor %}
+
+<!--{{posts}}-->
+{% endblock %}

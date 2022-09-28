@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+
+
+    <div style="text-align: center;margin-top: 10px">
+    <div style="border: 1px solid; margin-top: 20px; width: 100px; padding: 5px; text-align: center; border-radius: 10px">
+        <a href="{% url 'post_new' %}">
+            New Post
+        </a>
+    </div>
+    <div style="border: 1px solid; margin-top: 20px; width: 100px; padding: 5px; text-align: center; border-radius: 10px">
+        <a href="{% url 'post_draft' %}">
+            Post non active
+        </a>
+    </div>
+
+</div>
+    <div class="row" style="display: inline-block;">
+        <div style="width: 20%; display: inline-block;" ></div>
+        <div style="width: 60%; display: inline-block;">
+            <div class="row" style="margin-top: 50px">
+                    {% for post in posts %}
+                        {% if post.enabled == True%}
+
+                            <div style="display: inline-block;">
+                                <div style="border: 1px solid; margin-top: 20px; height: 75px; width:100%; padding: 5px">
+                                    <div style="text-align: center; font-size: 25px;">
+                                        <a href="{% url 'post_detail' post_pk=post.pk %}">{{ post.title }}</a>
+                                    </div>
+                                    <div style="font-size: 12px; text-align: center">
+                                        <p>{{ post.created_date.date }}</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+            </div>
+        </div>
+        <div style="width: 20%; display: inline-block;">    </div>
+    </div>
+
+
+    <!--{{posts}}-->
+{% endblock %}

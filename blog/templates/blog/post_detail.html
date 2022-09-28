@@ -1,0 +1,81 @@
+
+
+{% extends "blog/base.html" %}
+{% block content%}
+
+
+<div style="text-align: center;margin-top: 10px">
+    <div style=" border: 1px solid; width: 150px; border-radius: 10px; padding: 7px; position: relative">
+            <a href="{% url 'post_list' %}" style="text-decoration: none">
+                <- Back to posts
+            </a>
+    </div>
+    <div style="...">
+            <div style=" border: 1px solid; width: 150px; border-radius: 10px; padding: 7px;">
+                <a href="{% url 'post_edit' post_pk=post.pk %}" style="text-decoration: none">
+                    Edit
+                </a>
+            </div>
+
+            <div style=" border: 1px solid; width: 150px; border-radius: 10px; padding: 7px;">
+                <a href="{% url 'post_delete' post_pk=post.pk %}" style="text-decoration: none"> 
+                    Delete
+                </a>
+            </div>
+            <div style=" border: 1px solid; width: 150px; border-radius: 10px; padding: 7px;">
+                <a href="{% url 'post_public' post_pk=post.pk %}" style="text-decoration: none"> 
+                    Publish a post
+                </a>
+            </div>
+            </div>
+    </div>  
+
+</div>
+
+
+
+    <div style="border:1px dashed; m{{post.like}}</p>argin-top: 20px; padding: 10px; ">
+        {%if post.author%}
+            <div style="text-align: center; font-size: 25px; margin: 15px 15px 20px 15px;">
+                {{post.author}}
+            </div>
+        {% else %}
+            <div style="text-align: center; font-size: 25px; margin: 15px 15px 20px 15px;">
+               Unknown User
+            </div>
+        {% endif %}
+        <div style="text-align: center; font-size: 25px; margin: 15px 15px 20px 15px;">
+            {{post.title}}
+        </div>
+
+        <div style="text-align: center; font-size: 18px">
+            {{post.text}}
+        </div>
+
+        <div style="text-align: right; font-size: 15px; margin-top: 50px">
+            {{post.created_date}}
+        </div>
+        <div style="text-align: right; font-size: 15px; margin-top: 50px" >
+            <p>Просмотров {{post.views}}</p>
+        </div>
+        <div style="text-align: left; font-size: 15px; margin-top: 50px" >
+            <a href="{% url 'post_like' post_pk=post.pk %}"> Like</a>
+            <p>{{post.like}}</p>
+        </div>
+    </div>
+    <div style="border:1px dashed; margin-top: 20px; padding: 10px; ">
+
+        <hr>
+        <p>Comments: {{ comments.count }}</p>
+        {% for comment in comments %}
+
+            <div class="comment" style="margin-top: 10px; border:1px dashed; text-align: center">
+                {{ comment.create_date }}
+                {{ comment.author }} <br>
+                {{ comment.text}}
+            </div>
+        {% endfor %}
+
+    </div>
+<!--{{posts}}-->
+{% endblock %}
