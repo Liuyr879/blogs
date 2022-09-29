@@ -84,7 +84,8 @@ def category_in_list(request, category_id):
 def post_select(request, post_pk):
     user = request.user
     post = get_object_or_404(Post, pk=post_pk)
-    Favorites.objects.create(user=user, post=post)
+    if not Favorites.objects.filter(user=user, post=post).first():  
+        Favorites.objects.create(user=user, post=post)
     return render(request, "blog/post_detail.html", {"post": post})
 
 
