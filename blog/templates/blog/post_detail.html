@@ -27,6 +27,11 @@
                     Publish a post
                 </a>
             </div>
+            <div style=" border: 1px solid; width: 150px; border-radius: 10px; padding: 7px;">
+                <a href="{% url 'post_select' post_pk=post.pk %}" style="text-decoration: none"> 
+                    Add to selected
+                </a>
+            </div>
             </div>
     </div>  
 

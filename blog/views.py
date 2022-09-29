@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from blog.models import Post, Comment, Category
+from blog.models import Post, Comment, Category, Favorites
 from blog.forms import PostForm
 from django.http import Http404
 
@@ -79,3 +79,15 @@ def category_list(request):
 def category_in_list(request, category_id):
     posts = Post.objects.filter(category=category_id)
     return render(request, "blog/post_list.html", {'posts': posts})
+
+
+def post_select(request, post_pk):
+    user = request.user
+    post = get_object_or_404(Post, pk=post_pk)
+    Favorites.objects.create(user=user, post=post)
+    return render(request, "blog/post_detail.html", {"post": post})
+
+
+def post_favorites(request):
+    posts = [i.post for i in Favorites.objects.filter(user=request.user)]
+    return render(request, "blog/post_list.html", {"posts": posts})

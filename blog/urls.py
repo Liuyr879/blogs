@@ -1,8 +1,7 @@
-from django.urls import path, include
-
-from blog.views import (category_in_list, category_list, post_delete,
-                        post_detail, post_draft, post_edit, post_like,
-                        post_list, post_new, post_public)
+from blog.views import category_in_list, category_list, post_delete, \
+    post_detail, post_draft, post_edit, post_favorites, post_like, post_list, \
+    post_new, post_public, post_select
+from django.urls import include, path
 
 urlpatterns = [
     path('list/', post_list, name="post_list"),
@@ -16,5 +15,7 @@ urlpatterns = [
     path('category/', category_list, name='category_list'),
     path('category/<int:category_id>', category_in_list,
          name='category_in_list'),
+    path('favorite/', post_favorites, name='post_favorites'),
+    path('select/<int:post_pk>/', post_select, name='post_select'),
 
 ]

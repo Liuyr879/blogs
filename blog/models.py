@@ -13,6 +13,7 @@ class Post(models.Model):
     enabled = models.BooleanField(default=False)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, blank=True, null=True)
+    select = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.title}'
@@ -36,3 +37,8 @@ class Category(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+
+class Favorites(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True)
