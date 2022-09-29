@@ -1,8 +1,7 @@
-from django.http import Http404
-from django.shortcuts import get_object_or_404, redirect, render
-
+from django.shortcuts import render, get_object_or_404, redirect
+from blog.models import Post, Comment, Category
 from blog.forms import PostForm
-from blog.models import Post
+from django.http import Http404
 
 
 # Create your views here.
@@ -13,9 +12,11 @@ def post_list(request):
 
 def post_detail(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
+    comments = Comment.objects.filter(post=post_pk)
     post.views += 1
     post.save()
-    return render(request, "blog/post_detail.html", {"post": post})
+    return render(request, "blog/post_detail.html", {"post": post,
+                                                     "comments": comments})
 
 
 def post_new(request):
@@ -68,3 +69,13 @@ def post_public(request, post_pk):
     post.enabled = True
     post.save()
     return render(request, "blog/post_detail.html", {"post": post})
+
+
+def category_list(request):
+    categorys = Category.objects.all()
+    return render(request, "blog/category_list.html", {'categorys': categorys})
+
+
+def category_in_list(request, category_id):
+    posts = Post.objects.filter(category=category_id)
+    return render(request, "blog/post_list.html", {'posts': posts})
