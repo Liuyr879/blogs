@@ -68,7 +68,7 @@
             <p>Лайков {{post.like}}</p>
         </div>
         <div style="text-align: left;" >
-            <p>Rating: {{ rating_post }}</p>
+            <p>Rating: {{ rating_post|floatformat:2 }}</p>
         </div>
     </div>
     <div style="border:1px dashed; margin-top: 20px; padding: 10px; ">
