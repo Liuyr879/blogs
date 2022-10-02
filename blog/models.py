@@ -42,3 +42,10 @@ class Category(models.Model):
 class Favorites(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True)
+
+
+class Rating(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.PROTECT, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    rating = models.DecimalField(default=0, decimal_places=2, max_digits=3)
+    

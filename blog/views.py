@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from blog.models import Post, Comment, Category, Favorites
 from blog.forms import PostForm
+from blog.models import Category, Comment, Favorites, Post, Rating
 from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 
 
 # Create your views here.
@@ -13,10 +13,16 @@ def post_list(request):
 def post_detail(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
     comments = Comment.objects.filter(post=post_pk)
+    try:
+        rating = Rating.objects.filter(post=post_pk)
+        rating_post = sum([i.rating for i in rating]) / len(rating)
+    except ZeroDivisionError as err:
+        rating_post = 3
     post.views += 1
     post.save()
     return render(request, "blog/post_detail.html", {"post": post,
-                                                     "comments": comments})
+                                                     "comments": comments,
+                                                     "raiting_post": rating_post})
 
 
 def post_new(request):
@@ -84,7 +90,7 @@ def category_in_list(request, category_id):
 def post_select(request, post_pk):
     user = request.user
     post = get_object_or_404(Post, pk=post_pk)
-    if not Favorites.objects.filter(user=user, post=post).first():  
+    if not Favorites.objects.filter(user=user, post=post).first():
         Favorites.objects.create(user=user, post=post)
     return render(request, "blog/post_detail.html", {"post": post})
 

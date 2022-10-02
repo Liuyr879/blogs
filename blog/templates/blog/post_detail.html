@@ -67,6 +67,9 @@
             <a href="{% url 'post_like' post_pk=post.pk %}"> Like</a>
             <p>Лайков {{post.like}}</p>
         </div>
+        <div style="text-align: left;" >
+            <p>Rating: {{ rating_post }}</p>
+        </div>
     </div>
     <div style="border:1px dashed; margin-top: 20px; padding: 10px; ">
 
