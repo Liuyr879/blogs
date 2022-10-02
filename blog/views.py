@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 # Create your views here.
 def post_list(request):
-    posts = Post.objects.filter(enabled=True)
+    posts = Post.objects.filter(enabled=True).order_by("-like")
     return render(request, "blog/post_list.html", {"posts": posts})
 
 
